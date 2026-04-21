@@ -1,0 +1,15 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.opencv" >
+4
+5    <uses-sdk android:minSdkVersion="21" />
+6
+7    <uses-permission android:name="android.permission.CAMERA" />
+7-->/home/daniel-reyes/Documentos/Universidad/8v0/Vision_por_computadores/Parcial_1/openCV/java/AndroidManifest.xml:4:5-65
+7-->/home/daniel-reyes/Documentos/Universidad/8v0/Vision_por_computadores/Parcial_1/openCV/java/AndroidManifest.xml:4:22-62
+8
+9    <uses-feature android:name="android.hardware.camera" />
+9-->/home/daniel-reyes/Documentos/Universidad/8v0/Vision_por_computadores/Parcial_1/openCV/java/AndroidManifest.xml:5:5-60
+9-->/home/daniel-reyes/Documentos/Universidad/8v0/Vision_por_computadores/Parcial_1/openCV/java/AndroidManifest.xml:5:19-57
+10
+11</manifest>
