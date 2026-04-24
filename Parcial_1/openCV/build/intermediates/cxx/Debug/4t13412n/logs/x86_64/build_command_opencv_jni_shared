@@ -1,4 +1,0 @@
-/home/daniel-reyes/Android/Sdk/cmake/3.22.1/bin/ninja \
-  -C \
-  /home/daniel-reyes/Documentos/Universidad/8v0/Vision_por_computadores/Parcial_1/openCV/.cxx/Debug/4t13412n/x86_64 \
-  opencv_jni_shared

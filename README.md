@@ -26,11 +26,12 @@ Aplicación móvil desarrollada en Android que implementa técnicas de **visión
 
 ```
 Vision_Android_con_filtros/
-│── Parcial_1/              # Proyecto principal Android
-│── app/
-│── gradle/
-│── build.gradle
-│── settings.gradle
+│── app/                    # Aplicación Android
+│── openCV/                 # Módulo SDK de OpenCV
+│── gradle/                 # Archivos de configuración de Gradle
+│── build.gradle.kts        # Script de construcción raíz
+│── settings.gradle.kts     # Configuración de subproyectos
+│── opencv-4.12.0-android-sdk/ # SDK externo de OpenCV
 ```
 
 ---

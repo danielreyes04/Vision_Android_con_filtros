@@ -1,0 +1,17 @@
+{
+  "installationFolder": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/build/intermediates/prefab_package/release/prefab",
+  "gradlePath": ":openCV",
+  "packageInfo": {
+    "packageName": "openCV",
+    "packageSchemaVersion": 2,
+    "packageDependencies": [],
+    "modules": [
+      {
+        "moduleName": "opencv_jni_shared",
+        "moduleHeaders": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/native/jni/include",
+        "moduleExportLibraries": [],
+        "abis": []
+      }
+    ]
+  }
+}

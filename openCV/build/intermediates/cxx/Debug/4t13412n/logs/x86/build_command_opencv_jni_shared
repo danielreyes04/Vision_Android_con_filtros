@@ -1,0 +1,4 @@
+/home/daniel/Android/Sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/.cxx/Debug/4t13412n/x86" \
+  opencv_jni_shared

@@ -1,0 +1,26 @@
+{
+  "installationFolder": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/build/intermediates/prefab_package/debug/prefab",
+  "gradlePath": ":openCV",
+  "packageInfo": {
+    "packageName": "openCV",
+    "packageSchemaVersion": 2,
+    "packageDependencies": [],
+    "modules": [
+      {
+        "moduleName": "opencv_jni_shared",
+        "moduleHeaders": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/native/jni/include",
+        "moduleExportLibraries": [],
+        "abis": [
+          {
+            "abiName": "arm64-v8a",
+            "abiApi": 21,
+            "abiNdkMajor": 27,
+            "abiStl": "c++_shared",
+            "abiLibrary": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/.cxx/Debug/4t13412n/arm64-v8a/libopencv_jni_shared.a",
+            "abiAndroidGradleBuildJsonFile": "/home/daniel/Documentos/Universidad/Vision por computadora/Parcial/Vision_Android_con_filtros/openCV/.cxx/Debug/4t13412n/arm64-v8a/android_gradle_build.json"
+          }
+        ]
+      }
+    ]
+  }
+}
