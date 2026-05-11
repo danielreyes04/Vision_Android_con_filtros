@@ -33,36 +33,83 @@
         android:id="@+id/layoutBotones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp"
         android:background="#80000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/btnNormal"
-            android:layout_width="0dp"
+        <!-- Primera fila de botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Normal"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnBordes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Filtro: Gris"
-            android:textSize="12sp" />
+            <Button
+                android:id="@+id/btnNormal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Normal"
+                android:textSize="12sp"
+                android:layout_margin="2dp"/>
 
-        <Button
-            android:id="@+id/btnGaleria"
-            android:layout_width="0dp"
+            <Button
+                android:id="@+id/btnBordes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Filtro: Gris"
+                android:textSize="12sp"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/btnGaleria"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Galería"
+                android:textSize="12sp"
+                android:layout_margin="2dp"/>
+        </LinearLayout>
+
+        <!-- Segunda fila de botones -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Galería"
-            android:textSize="12sp" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRostros"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rostros"
+                android:backgroundTint="#2196F3"
+                android:textSize="12sp"
+                android:layout_margin="2dp" />
+
+            <Button
+                android:id="@+id/btnMonedas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Monedas COP"
+                android:backgroundTint="#FF9800"
+                android:textSize="12sp"
+                android:layout_margin="2dp" />
+
+            <Button
+                android:id="@+id/btnGirar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Girar"
+                android:backgroundTint="#9C27B0"
+                android:textSize="12sp"
+                android:layout_margin="2dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
