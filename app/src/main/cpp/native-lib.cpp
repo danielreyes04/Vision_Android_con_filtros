@@ -182,10 +182,12 @@ Java_com_example_parcial_MainActivity_detectarMonedasC(JNIEnv *env, jobject thiz
         return 0;
     }
 
-    // RGBA → Gris → Blur (necesario para HoughCircles)
+    // RGBA → Gris → Filtro para reducir ruido
     Mat gris, blur;
     cvtColor(img, gris, COLOR_RGBA2GRAY);
-    GaussianBlur(gris, blur, Size(9, 9), 2.0);
+
+    // El desenfoque mediano es mejor para eliminar las líneas de la madera (ruido de sal y pimienta)
+    medianBlur(gris, blur, 7);
 
     // Detectar círculos con HoughCircles
     std::vector<Vec3f> circulos;
@@ -193,12 +195,12 @@ Java_com_example_parcial_MainActivity_detectarMonedasC(JNIEnv *env, jobject thiz
             blur,
             circulos,
             HOUGH_GRADIENT,
-            1.2,                        // dp (resolución acumulador)
-            blur.rows / 6.0,            // minDist entre centros
-            80,                         // param1: umbral Canny
-            28,                         // param2: umbral acumulador (más bajo = más detecciones)
-            blur.cols / 20,             // radio mínimo (5% del ancho)
-            blur.cols / 5               // radio máximo (20% del ancho)
+            1.2,                        // dp (resolución: 1.2 ayuda a ser más preciso)
+            blur.rows / 10.0,           // minDist (separación entre monedas para evitar duplicados)
+            140,                        // param1: umbral Canny (Solo bordes de metal muy fuertes)
+            45,                         // param2: umbral acumulador (Equilibrado para la foto)
+            blur.cols / 55,             // radio mínimo
+            blur.cols / 8               // radio máximo (aumentado para permitir monedas grandes)
     );
 
     LOGD("detectarMonedasC: %zu círculo(s) detectado(s)", circulos.size());
@@ -213,15 +215,57 @@ Java_com_example_parcial_MainActivity_detectarMonedasC(JNIEnv *env, jobject thiz
         int radio = cvRound(c[2]);
 
         // Radio relativo (0.0 a 1.0) respecto al ancho
-        float diametroRel = (float) radio / anchoImg;
+        float radioRel = (float) radio / anchoImg;
 
-        // Clasificar moneda por radio relativo
-        // (ajustado para cámara frontal a ~20-30 cm de distancia)
+        // --- ANÁLISIS DE COLOR AVANZADO (CENTRO Y BORDE) ---
+        // ROI 1: Centro (para bimetálicas y color base)
+        Rect roiC(centro.x - 3, centro.y - 3, 7, 7);
+        roiC &= Rect(0, 0, img.cols, img.rows);
+        Scalar colorC = mean(img(roiC));
+
+        // ROI 2: Borde (para detectar si es bimetálica)
+        // Tomamos una muestra a la derecha del centro, casi al final del radio
+        int offsetBorde = (int)(radio * 0.75);
+        Rect roiB(centro.x + offsetBorde - 3, centro.y - 3, 7, 7);
+        roiB &= Rect(0, 0, img.cols, img.rows);
+        Scalar colorB = mean(img(roiB));
+
+        // Analizamos saturación en HSV para ambos puntos
+        Mat bgrC(1, 1, CV_8UC3, Scalar(colorC[2], colorC[1], colorC[0]));
+        Mat bgrB(1, 1, CV_8UC3, Scalar(colorB[2], colorB[1], colorB[0]));
+        Mat hsvC, hsvB;
+        cvtColor(bgrC, hsvC, COLOR_BGR2HSV);
+        cvtColor(bgrB, hsvB, COLOR_BGR2HSV);
+
+        int satC = hsvC.at<Vec3b>(0,0)[1];
+        int satB = hsvB.at<Vec3b>(0,0)[1];
+
+        // Umbrales calibrados para luz de interiores
+        bool centroDorado = (satC > 38);
+        bool bordeDorado  = (satB > 38);
+
+        // Clasificación por "Lógica de Material Estructural" basada en datos técnicos COP
         int valor = 0;
-        if      (diametroRel < 0.070f) valor = 100;   // <  21.35mm → $100
-        else if (diametroRel < 0.076f) valor = 200;   // <  23.05mm → $200
-        else if (diametroRel < 0.082f) valor = 500;   // <  25.20mm → $500
-        else                           valor = 1000;  // >= 25.20mm → $1000
+        if (satC > (satB + 10)) {
+            // --- BIMETÁLICA: CENTRO ORO / ANILLO PLATA ($1000 o $500 Antigua) ---
+            if (radioRel > 0.058f) valor = 1000;
+            else                   valor = 500; // 500 Antigua
+        }
+        else if (satB > (satC + 10)) {
+            // --- BIMETÁLICA: CENTRO PLATA / ANILLO ORO ($500 Nueva) ---
+            valor = 500;
+        }
+        else if (centroDorado && bordeDorado) {
+            // --- TODO DORADO ($100 Antigua o $100 Nueva) ---
+            valor = 100;
+        }
+        else {
+            // --- TODO PLATEADO ($50, $200 Nueva, $200 Antigua) ---
+            if      (radioRel < 0.040f) valor = 50;
+            else if (radioRel < 0.050f) valor = 100;
+            else if (radioRel < 0.058f) valor = 200; // 200 nueva
+            else                        valor = 200; // 200 antigua (más grande)
+        }
 
         totalPesos += valor;
 
