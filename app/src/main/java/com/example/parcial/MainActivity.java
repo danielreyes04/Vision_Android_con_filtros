@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     // ── Funciones C++ existentes ──────────────────────────────
     public native void procesarFiltroC(long addrInput, int tipoFiltro);
 
+    // Calibrar monedas desde assets (Lógica de SebastianUrrego)
+    public native void calibrateCoins(android.content.res.AssetManager assetManager);
+
     // ── Funciones C++ NUEVAS ──────────────────────────────────
     // Punto 1: Detección de Rostros (Viola-Jones / Haar Cascade)
     public native void detectarRostrosC(long addrInput, String rutaCascade);
@@ -94,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         if (!OpenCVLoader.initLocal()) {
             Log.e(TAG, "No se pudo inicializar OpenCV");
         }
+
+        // Calibrar monedas usando las imágenes de assets
+        calibrateCoins(getAssets());
 
         // Copiar el cascade XML desde assets al almacenamiento interno
         // (el C++ necesita una ruta de archivo real, no un asset stream)
