@@ -199,11 +199,11 @@ Java_com_example_parcial_MainActivity_detectarRostrosC(JNIEnv *env, jobject thiz
     detector.detectMultiScale(
             gris,
             rostros,
-            1.1,     // scaleFactor
-            3,       // minNeighbors
-            0,       // flags
-            Size(80, 80),   // tamaño mínimo de rostro
-            Size()          // tamaño máximo (sin límite)
+            1.2,             // scaleFactor: búsqueda más selectiva
+            6,               // minNeighbors: mucho más estricto para evitar falsos
+            0,               // flags
+            Size(100, 100),  // tamaño mínimo mayor
+            Size()           // tamaño máximo (sin límite)
     );
 
     LOGD("detectarRostrosC: %zu rostro(s) detectado(s)", rostros.size());
